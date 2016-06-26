@@ -1,14 +1,23 @@
 <div ng-controller="mainController">
 <div class="body"></div>
-    <div class="grad"></div>
-		<div class="header">
+    <div id="blur_div">
+        <div class="grad"></div>
+        <div class="header">
             <b><div>Geeks<span class="tc-blue-500">Board</span></div></b>
-		</div>
-		<br>
-    <div class="login">
-                    <input type="text" placeholder="Student ID" ng-model="login.user" name="user"><br>
-                    <input type="password" placeholder="Password" ng-model="login.password" name="password"><br><br>
-                    <lx-button lx-type="flat" class="bg-blue-500 login-button" ng-click="login()"><i class="mdi mdi-login-variant"></i> Login</lx-button>
-                    
+        </div>
+        <br>
+        <div class="login" ng-hide="showIndeterminateCircularProgress">
+            <form>
+                    <input type="text" placeholder="Student ID" ng-model="login.user" name="user" required=true><br>
+                    <input type="password" placeholder="Password" ng-model="login.password" name="password" required=true><br><br>
+                    <lx-button role="submit" lx-type="flat" class="bg-blue-500 login-button" ng-click="login();demoProgress()"><i class="mdi mdi-login-variant"></i> Login</lx-button>
+            </form>
+        </div>
+        <div class="page-center"><lx-progress lx-type="circular" lx-diameter="75" ng-if="showIndeterminateCircularProgress"></lx-progress></div>
+        
     </div>
+   
+       
+    
 </div>
+ 

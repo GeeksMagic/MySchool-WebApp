@@ -1,9 +1,6 @@
-(function()
-{
+
     'use strict';
-    var appControllers = angular
-        .module('Controllers')
-        .controller('DemoProgressController', DemoProgressController);
+    geeksApp.controller('DemoProgressController', DemoProgressController);
 
     DemoProgressController.$inject = ['$interval'];
 
@@ -21,5 +18,5 @@
         }
     }
 
+
     
-});

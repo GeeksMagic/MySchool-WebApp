@@ -50,3 +50,11 @@ body {
 .display-inline {
     display : inline-block;
 }
+.page-blur {
+    -webkit-filter: blur(5px);
+}
+.page-center {
+    position:absolute;
+    top: calc(50% - 75px);
+    left: 50%;
+}
