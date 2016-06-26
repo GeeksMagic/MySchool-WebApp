@@ -1,5 +1,5 @@
 
-    var geeksApp = angular.module("GeeksBoard", ['lumx', 'ngRoute']);
+    var geeksApp = angular.module("GeeksBoard", ['lumx', 'ngRoute', 'ngMaterial']);
 
     geeksApp.config(['$routeProvider', function ($routeProvider) {
                     $routeProvider
@@ -15,12 +15,13 @@
       $httpProvider.defaults.headers.patch = {};
     });
 
-    geeksApp.controller('mainController', function($scope, $rootScope, $location, $http, LxDialogService) {
+    geeksApp.controller('mainController', function($scope, $rootScope, $location, $http, LxDialogService, $mdDialog) {
         $scope.login = function(){
             
             if(($scope.login.user!=undefined)&&($scope.login.password!=undefined)){
             
                 $scope.showIndeterminateCircularProgress = true;
+                $scope.dialogId = "wrong";
 
         //        window.alert("clicked");
         //        if($scope.login.user == "admin"){
@@ -76,7 +77,23 @@
                             $location.path("/home");
                         }
                         else {
-                            window.alert(response.data.message);
+                            $scope.showAlert = function(ev) {
+                                // Appending dialog to document.body to cover sidenav in docs app
+                                // Modal dialogs should fully cover application
+                                // to prevent interaction outside of dialog
+                                $mdDialog.show(
+                                  $mdDialog.alert()
+                                    .parent(angular.element(document.querySelector('#popupContainer')))
+                                    .clickOutsideToClose(true)
+                                    .title('Something wrong with your credentials')
+                                    .textContent(response.data.message)
+                                    .ariaLabel('Alert Dialog Demo')
+                                    .ok('Got it!')
+                                    .targetEvent(ev)
+                                );
+                            };
+                            $scope.showAlert();
+//                            window.alert(response.data.message);
                             $scope.showIndeterminateCircularProgress = false;
                         }
                     }, function(response) {

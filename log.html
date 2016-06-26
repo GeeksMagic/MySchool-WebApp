@@ -3,7 +3,7 @@
     <div id="blur_div">
         <div class="grad"></div>
         <div class="header">
-            <b><div>Geeks<span class="tc-blue-500">Board</span></div></b>
+            <b><div>My<span class="tc-blue-500">School</span></div></b>
         </div>
         <br>
         <div class="login" ng-hide="showIndeterminateCircularProgress">
@@ -13,7 +13,29 @@
                     <lx-button role="submit" lx-type="flat" class="bg-blue-500 login-button" ng-click="login();demoProgress()"><i class="mdi mdi-login-variant"></i> Login</lx-button>
             </form>
         </div>
-        <div class="page-center"><lx-progress lx-type="circular" lx-diameter="75" ng-if="showIndeterminateCircularProgress"></lx-progress></div>
+        <div class="page-center"><lx-progress lx-type="circular" lx-color="white" lx-diameter="75" ng-if="showIndeterminateCircularProgress"></lx-progress></div>
+    <lx-dialog id="{{ dialogId }}">
+        <lx-dialog-header>
+            <div class="toolbar bgc-blue-500 pl++">
+                <span class="toolbar__label tc-white fs-title">
+                    There was something wrong with your credentials
+                </span>
+            </div>
+
+ 
+        </lx-dialog-header>
+
+        <lx-dialog-content>
+            
+                    <p class="p++">{{ displayMessage }}</p>
+                
+        </lx-dialog-content>
+
+        <lx-dialog-footer>
+            <lx-button lx-type="flat" lx-dialog-close>Ok</lx-button>
+        </lx-dialog-footer>
+    </lx-dialog>
+        <div class="dialog-demo-content" layout="row" layout-wrap layout-margin layout-align="center"></div>
         
     </div>
    
