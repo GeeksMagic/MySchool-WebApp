@@ -9,49 +9,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 <body ng-app="GeeksBoard">
-    <div class="navbar toolbar bgc-blue-500">
-        <div class="logo">
-            <img src="img/logo.png" class="display-inline" width="140px">
-            <img src="img/app_logo.gif" class="display-inline" width="40px">
+    <div ng-controller="homeController">
+        <div class="navbar toolbar bgc-blue-500">
+            <div class="logo">
+                <img src="img/logo.png" class="display-inline" width="140px">
+                <img src="img/app_logo.gif" class="display-inline" width="40px">
+            </div>
+            <span class="toolbar__label fs-title">MySchool</span>
+
+            <div class="toolbar__right">
+                <lx-search-filter lx-closed="true">
+                    <input type="text" ng-model="vm.toolbar">
+                </lx-search-filter>
+
+                <lx-dropdown lx-position="right" lx-over-toggle="true">
+                    <lx-dropdown-toggle>
+                        <lx-button lx-size="l" lx-color="black" lx-type="icon"><i class="mdi mdi-dots-vertical"></i></lx-button>
+                    </lx-dropdown-toggle>
+
+                    <lx-dropdown-menu>
+                        <ul>
+                            <li><a class="dropdown-link">Action</a></li>
+                            <li><a class="dropdown-link">Another action</a></li>
+                            <li><a class="dropdown-link">Something else here</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-link dropdown-link--is-header">Header</a></li>
+                            <li><a class="dropdown-link">Separated link</a></li>
+                        </ul>
+                    </lx-dropdown-menu>
+                </lx-dropdown>
+            </div>
         </div>
-        <span class="toolbar__label fs-title">MySchool</span>
-
-        <div class="toolbar__right">
-            <lx-search-filter lx-closed="true">
-                <input type="text" ng-model="vm.toolbar">
-            </lx-search-filter>
-
-            <lx-dropdown lx-position="right" lx-over-toggle="true">
-                <lx-dropdown-toggle>
-                    <lx-button lx-size="l" lx-color="black" lx-type="icon"><i class="mdi mdi-dots-vertical"></i></lx-button>
-                </lx-dropdown-toggle>
-
-                <lx-dropdown-menu>
-                    <ul>
-                        <li><a class="dropdown-link">Action</a></li>
-                        <li><a class="dropdown-link">Another action</a></li>
-                        <li><a class="dropdown-link">Something else here</a></li>
-                        <li class="dropdown-divider"></li>
-                        <li><a class="dropdown-link dropdown-link--is-header">Header</a></li>
-                        <li><a class="dropdown-link">Separated link</a></li>
-                    </ul>
-                </lx-dropdown-menu>
-            </lx-dropdown>
-        </div>
+        <div class="sidebar">
+            <div class="user-info bgc-blue-500 display-block" align="center">
+                <img src="img/profile1.jpg" class="img-circle display-block" width="75%">
+                <span class="user-name fs-title display-block">{{ firstName | capitalize }} {{ lastName | capitalize }}</span>
+            </div>
+            <div class="container">
+                <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-home"></i><span class="fs-body-1 menu-btn">Home</span></lx-button>
+                <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-book-open"></i><span class="fs-body-1 menu-btn">Tests</span></lx-button>
+                <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-table"></i><span class="fs-body-1 menu-btn">Result</span></lx-button>
+                <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-timetable"></i><span class="fs-body-1 menu-btn">Time Table</span></lx-button>
+            </div>
+        </div> 
     </div>
-    <div class="sidebar">
-        <div class="user-info bgc-blue-500 display-block" align="center">
-            <img src="img/profile1.jpg" class="img-circle display-block" width="75%">
-            <span class="user-name fs-title display-block">ADMIN</span>
-        </div>
-        <div class="container">
-            <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-home"></i><span class="fs-body-1 menu-btn">Home</span></lx-button>
-            <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-book-open"></i><span class="fs-body-1 menu-btn">Tests</span></lx-button>
-            <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-table"></i><span class="fs-body-1 menu-btn">Result</span></lx-button>
-            <lx-button lx-type="flat" class="menu-btn-width"><i class="mdi mdi-timetable"></i><span class="fs-body-1 menu-btn">Time Table</span></lx-button>
-        </div>
-    </div> 
-    
     
     
     

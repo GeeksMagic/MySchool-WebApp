@@ -1,27 +1,27 @@
+var geeksApp = angular.module("GeeksBoard", ['lumx', 'ngRoute', 'ngMaterial']);
 
-    var geeksApp = angular.module("GeeksBoard", ['lumx', 'ngRoute', 'ngMaterial']);
+geeksApp.config(['$routeProvider', function ($routeProvider) {
+                $routeProvider
+                .when('/',{templateUrl:'log.html'})
+                .when('/home',{templateUrl:'home.html'})
+                .when('/test',{templateUrl:'test.html'})
+                .otherwise({redirectTo:'/'});
+            }]);
 
-    geeksApp.config(['$routeProvider', function ($routeProvider) {
-                    $routeProvider
-                    .when('/',{templateUrl:'log.html'})
-                    .when('/home',{templateUrl:'home.html'})
-                    .otherwise({redirectTo:'/'});
-                }]);
+geeksApp.config(function ($httpProvider) {
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {'Content-Type':'application/json'};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {};
+});
 
-    geeksApp.config(function ($httpProvider) {
-      $httpProvider.defaults.headers.common = {};
-      $httpProvider.defaults.headers.post = {'Content-Type':'application/json'};
-      $httpProvider.defaults.headers.put = {};
-      $httpProvider.defaults.headers.patch = {};
-    });
+geeksApp.controller('loginController', function($scope, $rootScope, $location, $http, $mdDialog, userInfoStore) {
+    $scope.login = function(){
 
-    geeksApp.controller('mainController', function($scope, $rootScope, $location, $http, LxDialogService, $mdDialog) {
-        $scope.login = function(){
-            
+
             if(($scope.login.user!=undefined)&&($scope.login.password!=undefined)){
             
                 $scope.showIndeterminateCircularProgress = true;
-                $scope.dialogId = "wrong";
 
         //        window.alert("clicked");
         //        if($scope.login.user == "admin"){
@@ -65,7 +65,7 @@
 
                     $http({
                         method : 'POST',
-                        url : 'http://myschool.us-west-2.elasticbeanstalk.com/users/login',  //'http://192.168.1.3/users/login'
+                        url : 'http://myschool.us-west-2.elasticbeanstalk.com/api/users/login',  //'http://192.168.1.3/users/login'
                         data : {"username": $scope.login.user, "password": $scope.login.password},
 
 
@@ -73,6 +73,8 @@
 //                        console.log(response);
 //                        console.log(response.data);
                             if(response.data.message == null){
+                            userInfoStore.userInfo = response.data.user;
+                            console.log(userInfoStore.userInfo);
                             $rootScope.isLogin = true;
                             $location.path("/home");
                         }
@@ -87,7 +89,7 @@
                                     .clickOutsideToClose(true)
                                     .title('Something wrong with your credentials')
                                     .textContent(response.data.message)
-                                    .ariaLabel('Alert Dialog Demo')
+                                    .ariaLabel('Alert')
                                     .ok('Got it!')
                                     .targetEvent(ev)
                                 );
@@ -108,6 +110,32 @@
         //                window.alert(response.data);
         //            });
             }
-            };
-        
-    });
+        };
+
+});
+
+
+
+geeksApp.service('userInfoStore', function(){
+
+}); 
+
+
+
+
+
+geeksApp.controller('homeController',function($scope, $location, $rootScope, $mdDialog, userInfoStore){
+    $scope.firstName = userInfoStore.userInfo.firstName;
+    $scope.lastName = userInfoStore.userInfo.lastName;
+});
+
+
+
+
+
+
+geeksApp.filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
