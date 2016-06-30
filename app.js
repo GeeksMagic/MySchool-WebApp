@@ -1,12 +1,36 @@
 var geeksApp = angular.module("GeeksBoard", ['lumx', 'ngRoute', 'ngMaterial']);
 
-geeksApp.config(['$routeProvider', function ($routeProvider) {
+geeksApp.config(['$routeProvider', function ($routeProvider, $locationProvider) {
+                
                 $routeProvider
                 .when('/',{templateUrl:'log.html'})
-                .when('/home',{templateUrl:'home.html'})
+                .when('/home',{templateUrl:'home.html', access: {isLogin : true}})
                 .when('/test',{templateUrl:'test.html'})
                 .otherwise({redirectTo:'/'});
+//                $locationProvider.html5Mode(true);   // Enable after setting up the server
             }]);
+
+geeksApp.run( function($rootScope, $location) {
+
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+      if ( $rootScope.isLogin == null ) {
+        // no logged user, we should be going to #login
+        if ( next.templateUrl == "log.html" ) {
+          // already going to #login, no redirect needed
+        } else {
+          // not going to #login, we should redirect now
+          $location.path( '/' );
+        }
+      }         
+    });
+    
+    $rootScope.$on('$viewContentLoaded', function() {
+      $templateCache.removeAll();
+   });
+});
+    
+    
 
 geeksApp.config(function ($httpProvider) {
   $httpProvider.defaults.headers.common = {};
@@ -14,6 +38,7 @@ geeksApp.config(function ($httpProvider) {
   $httpProvider.defaults.headers.put = {};
   $httpProvider.defaults.headers.patch = {};
 });
+
 
 geeksApp.controller('loginController', function($scope, $rootScope, $location, $http, $mdDialog, userInfoStore) {
     $scope.login = function(){
@@ -61,7 +86,43 @@ geeksApp.controller('loginController', function($scope, $rootScope, $location, $
         ////                console.log(config);
         //            });
 
+/*------------------Start AES Encryption Code-------------------------------------------------------------------------------------------*/        
+                    
+                    var key = aesjs.util.convertStringToBytes("Example256BitKeyForEncryptioniso");
+                    
+                    
+                    var text = 'Text may be any length you wish, no padding is required.';
+                    var textBytes = aesjs.util.convertStringToBytes(text);
+                
+                
+                    console.log(text);
+                
+                    
+                    var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+                    var encryptedBytes = aesCtr.encrypt(textBytes);
+                
+                    
+                
+                    var postData = aesjs.util.convertBytesToString(encryptedBytes);
+                    console.log(postData);
+                                      
+                    
+                    // The counter mode of operation maintains internal state, so to
+                    // decrypt a new instance must be instantiated.
+                    var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+                    var decryptedBytes = aesCtr.decrypt(encryptedBytes);
 
+                    // Convert our bytes back into text
+                    var decryptedText = aesjs.util.convertBytesToString(decryptedBytes);
+                    console.log(decryptedText);
+
+                
+                
+                
+                
+/*------------------End AES Encryption Code-------------------------------------------------------------------------------------------*/               
+                
+                
 
                     $http({
                         method : 'POST',
@@ -74,7 +135,7 @@ geeksApp.controller('loginController', function($scope, $rootScope, $location, $
 //                        console.log(response.data);
                             if(response.data.message == null){
                             userInfoStore.userInfo = response.data.user;
-                            console.log(userInfoStore.userInfo);
+//                            console.log(userInfoStore.userInfo);
                             $rootScope.isLogin = true;
                             $location.path("/home");
                         }
